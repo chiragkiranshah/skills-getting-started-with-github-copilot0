@@ -4,7 +4,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const signupForm = document.getElementById("signup-form");
   const messageDiv = document.getElementById("message");
 
-  // Function to fetch activities from API
+  /**
+   * Loads activities and rebuilds the activity cards and signup options.
+   * Called at startup and after a participant is added or removed.
+   */
   async function fetchActivities() {
     try {
       const response = await fetch("/activities", { cache: "no-store" });
@@ -82,6 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  // Delegate clicks because participant controls are recreated on each refresh.
   activitiesList.addEventListener("click", async (event) => {
     const removeButton = event.target.closest(".remove-participant");
     if (!removeButton) {
@@ -113,7 +117,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Handle form submission
+  // Submit a signup and refresh the displayed availability when it succeeds.
   signupForm.addEventListener("submit", async (event) => {
     event.preventDefault();
 
